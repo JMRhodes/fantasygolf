@@ -7,6 +7,10 @@ config:
   via: nginx
   cache: redis
 tooling:
+  dust:
+    service: appserver
+    description: Run Duster
+    cmd: ./vendor/bin/duster
   art:
     service: appserver
     description: Run an Artisan command

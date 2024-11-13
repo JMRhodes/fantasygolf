@@ -11,7 +11,9 @@ tooling:
     service: appserver
     description: Run Duster
     cmd: ./vendor/bin/duster
+    path: /app
   art:
     service: appserver
     description: Run an Artisan command
     cmd: php artisan
+    path: /app

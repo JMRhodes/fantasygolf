@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -51,13 +52,14 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('gravatar')
+                    ->label('')
+                    ->circular(),
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('email')
+                    ->badge()
                     ->searchable(),
-                TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -66,8 +68,6 @@ class UserResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('avatar_url')
-                    ->searchable(),
             ])
             ->filters([
                 //

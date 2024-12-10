@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -22,7 +23,15 @@ class Player extends Model implements HasMedia
     protected $attributes = [
         'name' => '',
         'salary' => 0,
+        'image' => null,
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['avatar'];
 
     public static function booted(): void
     {
@@ -31,9 +40,21 @@ class Player extends Model implements HasMedia
         });
     }
 
-    public function team(): BelongsToMany
+    public function teams(): BelongsToMany
     {
-        return $this->belongsToMany(Team::class);
+        return $this->belongsToMany(
+            Team::class,
+            'teams_players',
+            'player_id',
+            'team_id'
+        );
+    }
+
+    public function avatar(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->getFirstMediaUrl('player')
+        );
     }
 
     public function registerMediaCollections(): void

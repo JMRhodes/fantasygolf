@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
 
 class Team extends Model
@@ -30,8 +30,13 @@ class Team extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function players(): HasMany
+    public function players(): BelongsToMany
     {
-        return $this->hasMany(Player::class);
+        return $this->belongsToMany(
+            Player::class,
+            'teams_players',
+            'team_id',
+            'player_id'
+        );
     }
 }

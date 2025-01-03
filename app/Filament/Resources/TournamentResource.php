@@ -3,12 +3,10 @@
 namespace App\Filament\Resources;
 
 use App\Enum\TournamentStatus;
-use App\Filament\Resources\TournamentResource\Pages;
 use App\Filament\Resources\TournamentResource\Pages\CreateTournament;
 use App\Filament\Resources\TournamentResource\Pages\EditTournament;
 use App\Filament\Resources\TournamentResource\Pages\ListTournaments;
 use App\Models\Tournament;
-use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -16,7 +14,6 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;

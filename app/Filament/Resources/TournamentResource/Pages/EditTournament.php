@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\TournamentResource\Pages;
 
 use App\Filament\Resources\TournamentResource;
-use Filament\Actions;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 

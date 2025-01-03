@@ -90,9 +90,9 @@ class PlayerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => ListPlayers::route('/'),
+            'index' => ListPlayers::route('/'),
             'create' => CreatePlayer::route('/create'),
-            'edit'   => EditPlayer::route('/{record}/edit'),
+            'edit' => EditPlayer::route('/{record}/edit'),
         ];
     }
 }

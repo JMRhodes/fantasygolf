@@ -10,6 +10,12 @@ return new class extends Migration
     {
         Schema::create('tournaments', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->enum('status', ['upcoming', 'in-progress', 'completed'])->default('upcoming');
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->timestamps();
         });
     }

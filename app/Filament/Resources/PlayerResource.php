@@ -6,6 +6,7 @@ use App\Filament\Resources\PlayerResource\Pages\CreatePlayer;
 use App\Filament\Resources\PlayerResource\Pages\EditPlayer;
 use App\Filament\Resources\PlayerResource\Pages\ListPlayers;
 use App\Models\Player;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -29,15 +30,26 @@ class PlayerResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('salary')
-                    ->required()
-                    ->numeric(),
-                SpatieMediaLibraryFileUpload::make('avatar')
-                    ->collection('player'),
-            ]);
+                Section::make('Player Information')
+                    ->schema([
+                        TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('salary')
+                            ->prefixIcon('phosphor-currency-dollar-duotone')
+                            ->required()
+                            ->numeric(),
+                    ])
+                    ->columnSpan(8),
+                Section::make()
+                    ->schema([
+                        SpatieMediaLibraryFileUpload::make('avatar')
+                            ->avatar()
+                            ->collection('player'),
+                    ])
+                    ->columnSpan(4),
+            ])
+            ->columns(12);
     }
 
     public static function table(Table $table): Table
@@ -78,9 +90,9 @@ class PlayerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListPlayers::route('/'),
+            'index'  => ListPlayers::route('/'),
             'create' => CreatePlayer::route('/create'),
-            'edit' => EditPlayer::route('/{record}/edit'),
+            'edit'   => EditPlayer::route('/{record}/edit'),
         ];
     }
 }

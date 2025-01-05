@@ -35,6 +35,11 @@ class PlayerResource extends Resource
                         TextInput::make('name')
                             ->required()
                             ->maxLength(255),
+                        TextInput::make('pga_id')
+                            ->label('PGA ID')
+                            ->required()
+                            ->numeric()
+                            ->maxLength(8),
                         TextInput::make('salary')
                             ->prefixIcon('phosphor-currency-dollar-duotone')
                             ->required()
@@ -62,11 +67,18 @@ class PlayerResource extends Resource
                     ->size(38)
                     ->label(''),
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('salary')
+                    ->numeric()
+                    ->prefix('$')
+                    ->sortable(),
+                TextColumn::make('total_points')
+                    ->label('Points')
                     ->numeric()
                     ->sortable(),
             ])
+            ->defaultPaginationPageOption(50)
             ->filters([
                 //
             ])

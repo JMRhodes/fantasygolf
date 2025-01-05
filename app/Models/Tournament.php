@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Enum\TournamentStatus;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -19,6 +21,7 @@ class Tournament extends Model implements HasMedia
         'uuid',
         'name',
         'description',
+        'status',
         'start_date',
         'end_date',
     ];
@@ -43,5 +46,17 @@ class Tournament extends Model implements HasMedia
     {
         $this->addMediaCollection(self::COLLECTION)
             ->singleFile();
+    }
+
+    public function results(): HasMany
+    {
+        return $this->hasMany(Results::class);
+    }
+
+    protected function casts()
+    {
+        return [
+            'status' => TournamentStatus::class,
+        ];
     }
 }

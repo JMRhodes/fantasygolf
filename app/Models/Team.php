@@ -15,7 +15,7 @@ class Team extends Model
     protected $fillable = [
         'uuid',
         'name',
-        'user_id',
+        'owner_id',
     ];
 
     public static function booted(): void
@@ -25,9 +25,9 @@ class Team extends Model
         });
     }
 
-    public function user(): BelongsTo
+    public function owner(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Owner::class);
     }
 
     public function players(): BelongsToMany

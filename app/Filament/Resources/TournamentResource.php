@@ -6,6 +6,7 @@ use App\Enum\TournamentStatus;
 use App\Filament\Resources\TournamentResource\Pages\CreateTournament;
 use App\Filament\Resources\TournamentResource\Pages\EditTournament;
 use App\Filament\Resources\TournamentResource\Pages\ListTournaments;
+use App\Filament\Resources\TournamentResource\RelationManagers\ResultsRelationManager;
 use App\Models\Tournament;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
@@ -35,17 +36,22 @@ class TournamentResource extends Resource
                     ->schema([
                         TextInput::make('name')
                             ->required()
+                            ->columnSpan(2)
                             ->maxLength(255),
-                        Select::make('status')
-                            ->options(TournamentStatus::class),
-                    ])
-                    ->columnSpan(8),
-                Section::make('Meta Information')
-                    ->schema([
                         DatePicker::make('start_date')
+                            ->columnSpan(1)
                             ->format('Y-m-d'),
                         DatePicker::make('end_date')
+                            ->columnSpan(1)
                             ->format('Y-m-d'),
+                        Select::make('status')
+                            ->columnSpan(2)
+                            ->options(TournamentStatus::class),
+                    ])
+                    ->columns(2)
+                    ->columnSpan(8),
+                Section::make()
+                    ->schema([
                         SpatieMediaLibraryFileUpload::make('thumbnail')
                             ->collection(Tournament::COLLECTION),
                     ])
@@ -68,10 +74,10 @@ class TournamentResource extends Resource
                 TextColumn::make('status')
                     ->badge(),
                 TextColumn::make('start_date')
-                    ->date('Y-m-d')
+                    ->date('M jS')
                     ->sortable(),
                 TextColumn::make('end_date')
-                    ->date('Y-m-d')
+                    ->date('M jS')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -98,7 +104,7 @@ class TournamentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            'results' => ResultsRelationManager::class,
         ];
     }
 

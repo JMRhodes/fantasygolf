@@ -13,6 +13,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
@@ -41,8 +42,8 @@ class TeamResource extends Resource
                         TextInput::make('name')
                             ->required()
                             ->maxLength(128),
-                        Select::make('user_id')
-                            ->relationship(name: 'user', titleAttribute: 'name')
+                        Select::make('owner_id')
+                            ->relationship(name: 'owner', titleAttribute: 'name')
                             ->required(),
                     ]),
             ]);
@@ -53,15 +54,11 @@ class TeamResource extends Resource
         return $table
             ->columns([
                 Split::make([
-                    ImageColumn::make('user.gravatar')
-                        ->circular()
-                        ->label('Avatar')
-                        ->grow(false)
-                        ->searchable(),
                     Stack::make([
                         TextColumn::make('name')
+                            ->weight(FontWeight::SemiBold)
                             ->searchable(),
-                        TextColumn::make('user.email')
+                        TextColumn::make('owner.name')
                             ->size('xs')
                             ->color(Color::Gray)
                             ->searchable(),
@@ -79,6 +76,7 @@ class TeamResource extends Resource
                         ->suffix(' pts'),
                 ]),
             ])
+            ->defaultPaginationPageOption(50)
             ->filters([
                 //
             ])

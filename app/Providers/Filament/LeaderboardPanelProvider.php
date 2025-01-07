@@ -2,15 +2,11 @@
 
 namespace App\Providers\Filament;
 
-use Filament\FontProviders\GoogleFontProvider;
-use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Navigation\MenuItem;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
-use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -19,37 +15,24 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class AdminPanelProvider extends PanelProvider
+class LeaderboardPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->id('admin')
-            ->path('admin')
-            ->login()
-            ->homeUrl('/admin')
+            ->id('leaderboard')
+            ->path('leaderboard')
+            ->default()
+            ->brandName('FantasyGolf')
+            ->topNavigation()
             ->colors([
                 'primary' => '#003C80',
             ])
-            ->font('Inter', provider: GoogleFontProvider::class)
-            ->brandName('FantasyGolf')
-            ->darkMode(false)
-            ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
-            ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
+            ->discoverResources(in: app_path('Filament/Leaderboard/Resources'), for: 'App\\Filament\\Leaderboard\\Resources')
             ->pages([
-                // Dashboard::class,
+                // Dashboard::class
             ])
-            ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
-            ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
-            ])
-            ->userMenuItems([
-                'profile' => MenuItem::make()
-                    ->label(fn () => auth()->user()->name)
-                    ->url('/admin/profile')
-                    ->icon('heroicon-m-user-circle'),
-            ])
+            ->widgets([])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -60,9 +43,6 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-            ])
-            ->authMiddleware([
-                Authenticate::class,
             ]);
     }
 }

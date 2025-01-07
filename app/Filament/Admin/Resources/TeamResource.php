@@ -57,6 +57,7 @@ class TeamResource extends Resource
                     Stack::make([
                         TextColumn::make('name')
                             ->weight(FontWeight::SemiBold)
+                            ->sortable()
                             ->searchable(),
                         TextColumn::make('owner.name')
                             ->size('xs')
@@ -68,15 +69,18 @@ class TeamResource extends Resource
                         ->stacked()
                         ->limit(4)
                         ->wrap(),
-                    TextColumn::make('points')
+                    TextColumn::make('rank.points')
+                        ->label('Total Points')
                         ->grow(false)
                         ->default(0)
                         ->badge()
                         ->color(Color::Gray)
+                        ->sortable()
                         ->suffix(' pts'),
                 ]),
             ])
             ->defaultPaginationPageOption(50)
+            ->defaultSort('rank.points', 'desc')
             ->filters([
                 //
             ])

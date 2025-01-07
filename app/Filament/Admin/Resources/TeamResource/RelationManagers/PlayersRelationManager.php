@@ -36,6 +36,11 @@ class PlayersRelationManager extends RelationManager
                 TextColumn::make('salary')
                     ->numeric()
                     ->sortable(),
+                TextColumn::make('results.points')
+                    ->numeric()
+                    ->default(0)
+                    ->suffix('pts')
+                    ->sortable(),
             ])
             ->filters([
                 //

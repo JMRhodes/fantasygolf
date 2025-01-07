@@ -45,6 +45,7 @@ class ResultsRelationManager extends RelationManager
                 TextColumn::make('player.name'),
                 TextColumn::make('points'),
             ])
+            ->defaultPaginationPageOption(25)
             ->filters([
                 //
             ])

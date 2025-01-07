@@ -54,14 +54,16 @@ class TeamResource extends Resource
                         ->stacked()
                         ->limit(4)
                         ->wrap(),
-                    TextColumn::make('points')
+                    TextColumn::make('rank.points')
                         ->grow(false)
                         ->default(0)
                         ->badge()
                         ->color(Color::Gray)
+                        ->sortable()
                         ->suffix(' pts'),
                 ]),
             ])
+            ->defaultSort('rank.points', 'desc')
             ->defaultPaginationPageOption(50)
             ->paginationPageOptions([50, 100, 250])
             ->filters([

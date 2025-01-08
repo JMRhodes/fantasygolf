@@ -7,11 +7,10 @@ use App\Models\Team;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
-use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\Layout\Split;
-use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\TextColumn\TextColumnSize;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
 
 class TeamResource extends Resource
@@ -38,30 +37,29 @@ class TeamResource extends Resource
     {
         return $table
             ->columns([
-                Split::make([
-                    Stack::make([
-                        TextColumn::make('name')
-                            ->weight(FontWeight::SemiBold)
-                            ->sortable()
-                            ->searchable(),
-                        TextColumn::make('owner.name')
-                            ->size('xs')
-                            ->color(Color::Gray)
-                            ->searchable(),
-                    ]),
-                    ImageColumn::make('players.avatar')
-                        ->circular()
-                        ->stacked()
-                        ->limit(4)
-                        ->wrap(),
-                    TextColumn::make('rank.points')
-                        ->grow(false)
-                        ->default(0)
-                        ->badge()
-                        ->color(Color::Gray)
-                        ->sortable()
-                        ->suffix(' pts'),
-                ]),
+                TextColumn::make('rank.rank')
+                    ->label('#')
+                    ->grow(false)
+                    ->sortable()
+                    ->default('-'),
+                ViewColumn::make('name')
+                    ->label('Team')
+                    ->sortable()
+                    ->searchable()
+                    ->view('filament.tables.columns.team-name'),
+                ImageColumn::make('players.avatar')
+                    ->circular()
+                    ->stacked()
+                    ->limit(4)
+                    ->wrap(),
+                TextColumn::make('rank.points')
+                    ->grow(false)
+                    ->default(0)
+                    ->badge()
+                    ->size(TextColumnSize::Large)
+                    ->color(Color::Gray)
+                    ->sortable()
+                    ->suffix(' pts'),
             ])
             ->defaultSort('rank.points', 'desc')
             ->defaultPaginationPageOption(50)

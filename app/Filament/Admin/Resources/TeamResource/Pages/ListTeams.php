@@ -3,12 +3,14 @@
 namespace App\Filament\Admin\Resources\TeamResource\Pages;
 
 use App\Filament\Admin\Resources\TeamResource;
-use App\Services\TeamService;
+use App\Models\Team;
+use App\Pipes\CalculatePoints;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Colors\Color;
+use Illuminate\Pipeline\Pipeline;
 
 class ListTeams extends ListRecords
 {
@@ -23,15 +25,20 @@ class ListTeams extends ListRecords
                 ->color(Color::Green)
                 ->requiresConfirmation()
                 ->modalHeading('Sync All Team Data')
-                ->action(function (TeamService $teamService) {
-                    $teamService->updateRanks();
+                ->action(function (Pipeline $pipeline) {
+                    $teams = Team::all();
 
-                    // Notify the user of the sync
-                    Notification::make()
-                        ->title(__('Team Data Synced'))
-                        ->success()
-                        ->seconds(5)
-                        ->send();
+                    $pipeline->send($teams)
+                        ->through([
+                            CalculatePoints::class,
+                        ])
+                        ->then(function () {
+                            Notification::make()
+                                ->title(__('Team Data Synced'))
+                                ->success()
+                                ->seconds(5)
+                                ->send();
+                        });
                 }),
         ];
     }

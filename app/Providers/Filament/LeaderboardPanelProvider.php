@@ -23,6 +23,7 @@ class LeaderboardPanelProvider extends PanelProvider
             ->id('leaderboard')
             ->path('leaderboard')
             ->default()
+            ->spa()
             ->brandName('FantasyGolf')
             ->topNavigation()
             ->colors([

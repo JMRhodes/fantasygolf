@@ -51,7 +51,8 @@ class TeamResource extends Resource
                     ->circular()
                     ->stacked()
                     ->limit(4)
-                    ->wrap(),
+                    ->wrap()
+                    ->visibleFrom('md'),
                 TextColumn::make('rank.points')
                     ->grow(false)
                     ->default(0)

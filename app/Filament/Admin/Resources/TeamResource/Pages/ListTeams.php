@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources\TeamResource\Pages;
 use App\Filament\Admin\Resources\TeamResource;
 use App\Models\Team;
 use App\Pipes\CalculatePoints;
+use App\Pipes\CalculateRankings;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
@@ -31,6 +32,7 @@ class ListTeams extends ListRecords
                     $pipeline->send($teams)
                         ->through([
                             CalculatePoints::class,
+                            CalculateRankings::class,
                         ])
                         ->then(function () {
                             Notification::make()

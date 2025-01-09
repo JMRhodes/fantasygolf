@@ -2,18 +2,32 @@
 
 namespace App\Pipes;
 
-use App\Models\Team;
+use App\Models\Rank;
 use Closure;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class CalculateRankings
 {
     public function handle(Collection $teams, Closure $next)
     {
-        //        $teams = Team::all()->sortBy('rank.points', SORT_REGULAR, true);
-        //        $teams->each(function ($team, $index) {
-        //            $team->rank->rank = $index + 1;
-        //            $team->rank->save();
-        //        });
+        $rankings = DB::select('SELECT *, DENSE_RANK() OVER (ORDER BY points DESC) AS `dense_rank` FROM ranks');
+
+        if (! $rankings) {
+            return $next($teams);
+        }
+
+        foreach ($rankings as $ranking) {
+            $rank = Rank::where('id', $ranking->id)->first();
+            if (! $rank) {
+                continue;
+            }
+
+            $rank->previous = $rank->rank;
+            $rank->rank = $ranking->dense_rank;
+            $rank->save();
+        }
+
+        return $next($teams);
     }
 }

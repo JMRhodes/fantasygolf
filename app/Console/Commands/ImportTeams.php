@@ -33,8 +33,8 @@ class ImportTeams extends Command
         $csvFile = $this->argument('csvFile');
 
         $rows = SimpleExcelReader::create($csvFile)->getRows();
-        $rows->each(function (array $rowProperties) {
-            $this->info('Importing team: ' . json_encode($rowProperties));
+        $rows->each(function (array $rowProperties, int $rowNumber) {
+            $this->info('Importing team: ' . ($rowNumber + 2) . ' ' . json_encode($rowProperties));
 
             $team = Team::where('name', $rowProperties['team_name'])->firstOr(function () use ($rowProperties) {
                 $owner = Owner::where('name', $rowProperties['owner'])->firstOr(function () use ($rowProperties) {
@@ -43,11 +43,19 @@ class ImportTeams extends Command
                     ]);
                 });
 
+                $this->info('Creating Team: ' . $rowProperties['team_name']);
+
                 return Team::create([
                     'name' => $rowProperties['team_name'],
                     'owner_id' => $owner->id,
                 ]);
             });
+
+            if (! $team) {
+                $this->error('Team not found: ' . $rowProperties['team_name']);
+
+                return;
+            }
 
             // Detach all players from the team
             $team->players()->detach();

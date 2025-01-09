@@ -38,7 +38,7 @@ class Player extends Model implements HasMedia
      *
      * @var array
      */
-    protected $appends = ['avatar', 'total_points'];
+    protected $appends = ['avatar'];
 
     public static function booted(): void
     {

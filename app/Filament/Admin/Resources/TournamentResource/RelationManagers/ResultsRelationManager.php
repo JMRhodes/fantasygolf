@@ -41,10 +41,14 @@ class ResultsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('player.name')
             ->columns([
-                TextColumn::make('position'),
-                TextColumn::make('player.name'),
-                TextColumn::make('points'),
+                TextColumn::make('position')
+                    ->grow(false),
+                TextColumn::make('player.name')
+                    ->grow(true),
+                TextColumn::make('points')
+                    ->grow(false),
             ])
+            ->emptyStateDescription('No results have been added yet.')
             ->defaultSort('position', 'asc')
             ->defaultPaginationPageOption(25)
             ->filters([

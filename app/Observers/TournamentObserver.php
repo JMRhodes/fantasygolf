@@ -8,6 +8,7 @@ use App\Pipes\CalculatePoints;
 use App\Pipes\CalculateRankings;
 use Filament\Notifications\Notification;
 use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Facades\Cache;
 
 class TournamentObserver
 {
@@ -24,6 +25,8 @@ class TournamentObserver
      */
     public function updated(Tournament $tournament): void
     {
+        Cache::flush();
+
         $teams = Team::all();
 
         app(Pipeline::class)

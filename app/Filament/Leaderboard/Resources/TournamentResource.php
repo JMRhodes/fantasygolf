@@ -2,12 +2,15 @@
 
 namespace App\Filament\Leaderboard\Resources;
 
+use App\Filament\Admin\Resources\TournamentResource\RelationManagers\ResultsRelationManager;
 use App\Filament\Leaderboard\Resources\TournamentResource\Pages\ListTournaments;
+use App\Filament\Leaderboard\Resources\TournamentResource\Pages\ViewTournament;
 use App\Models\Tournament;
 use Carbon\Carbon;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\FontWeight;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
@@ -62,7 +65,7 @@ class TournamentResource extends Resource
                 //
             ])
             ->actions([
-                //
+                ViewAction::make(),
             ])
             ->bulkActions([
                 //
@@ -72,7 +75,7 @@ class TournamentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            'results' => ResultsRelationManager::class,
         ];
     }
 
@@ -80,6 +83,7 @@ class TournamentResource extends Resource
     {
         return [
             'index' => ListTournaments::route('/'),
+            'view' => ViewTournament::route('/{record}'),
         ];
     }
 }

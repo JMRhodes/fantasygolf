@@ -27,7 +27,7 @@ class SyncPlayerData extends Command
      */
     public function handle()
     {
-        $response = Http::get('https://www.pgatour.com/_next/data/pgatour-prod-1.72.4/en/players.json');
+        $response = Http::get('https://www.pgatour.com/_next/data/pgatour-prod-1.72.5/en/players.json');
 
         $players = $response->collect('pageProps.players.players');
         $players->each(function ($player) {

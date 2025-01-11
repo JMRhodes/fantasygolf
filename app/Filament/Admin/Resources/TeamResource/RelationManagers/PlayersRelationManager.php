@@ -7,8 +7,8 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\AttachAction;
 use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\DetachAction;
+use Filament\Tables\Actions\DetachBulkAction;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -52,13 +52,14 @@ class PlayersRelationManager extends RelationManager
             ])
             ->actions([
                 ActionGroup::make([
-                    DeleteAction::make()
+                    DetachAction::make('Remove')
                         ->requiresConfirmation(),
                 ]),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DetachBulkAction::make('Remove')
+                        ->requiresConfirmation(),
                 ]),
             ]);
     }

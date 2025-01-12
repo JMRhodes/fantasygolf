@@ -2,7 +2,9 @@
 
 namespace App\Filament\Leaderboard\Resources;
 
+use App\Filament\Admin\Resources\TeamResource\RelationManagers\PlayersRelationManager;
 use App\Filament\Leaderboard\Resources\TeamResource\Pages\ListTeams;
+use App\Filament\Leaderboard\Resources\TeamResource\Pages\ViewTeams;
 use App\Models\Team;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -79,7 +81,7 @@ class TeamResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PlayersRelationManager::class,
         ];
     }
 
@@ -87,6 +89,7 @@ class TeamResource extends Resource
     {
         return [
             'index' => ListTeams::route('/'),
+            'view' => ViewTeams::route('/{record}'),
         ];
     }
 }

@@ -19,6 +19,8 @@ class ResultsRelationManager extends RelationManager
 {
     protected static string $relationship = 'results';
 
+    protected static bool $isLazy = false;
+
     public function form(Form $form): Form
     {
         return $form

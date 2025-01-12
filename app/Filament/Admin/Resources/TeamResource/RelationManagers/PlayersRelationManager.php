@@ -17,6 +17,8 @@ class PlayersRelationManager extends RelationManager
 {
     protected static string $relationship = 'players';
 
+    protected static bool $isLazy = false;
+
     public function form(Form $form): Form
     {
         //
@@ -35,6 +37,8 @@ class PlayersRelationManager extends RelationManager
                 TextColumn::make('name'),
                 TextColumn::make('salary')
                     ->numeric()
+                    ->badge()
+                    ->prefix('$')
                     ->sortable(),
                 TextColumn::make('results.points')
                     ->numeric()

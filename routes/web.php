@@ -6,6 +6,6 @@ Route::get('/', function () {
     return redirect('/fantasy-golf/leaderboard');
 });
 
-Route::get('/fantasy-golf', function () {
+Route::get('fantasy-golf', function () {
     return redirect('/fantasy-golf/leaderboard');
 });

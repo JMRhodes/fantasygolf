@@ -21,10 +21,12 @@ class LeaderboardPanelProvider extends PanelProvider
     {
         return $panel
             ->id('leaderboard')
-            ->path('leaderboard')
+            ->path('fantasy-golf/leaderboard')
+            ->favicon(asset('images/favicon.png'))
+            ->brandLogo(asset('images/logo.svg'))
+            ->brandName('FantasyGolf')
             ->default()
             ->spa()
-            ->brandName('FantasyGolf')
             ->topNavigation()
             ->colors([
                 'primary' => '#003C80',

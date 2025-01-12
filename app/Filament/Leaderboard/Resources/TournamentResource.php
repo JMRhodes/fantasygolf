@@ -65,7 +65,9 @@ class TournamentResource extends Resource
                 //
             ])
             ->actions([
-                ViewAction::make(),
+                ViewAction::make()
+                    ->label('')
+                    ->icon(false),
             ])
             ->bulkActions([
                 //

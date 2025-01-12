@@ -48,7 +48,7 @@ class ResultsRelationManager extends RelationManager
                 TextColumn::make('points')
                     ->grow(false),
             ])
-            ->emptyStateDescription('No results have been added yet.')
+            ->emptyStateDescription('No results have been added yet. Check back after this tournament has finalized.')
             ->defaultSort('position', 'asc')
             ->defaultPaginationPageOption(25)
             ->filters([

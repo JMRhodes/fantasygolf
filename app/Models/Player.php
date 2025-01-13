@@ -31,7 +31,6 @@ class Player extends Model implements HasMedia
     protected $attributes = [
         'name' => '',
         'salary' => 0,
-        'total_points' => 0,
     ];
 
     /**
